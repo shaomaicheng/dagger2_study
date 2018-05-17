@@ -1,11 +1,16 @@
 package exampl.com.dagger2;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import javax.inject.Inject;
 
+import exampl.com.dagger2.component.DaggerFlowerComponent;
+import exampl.com.dagger2.component.DaggerMainActivityComponent;
+import exampl.com.dagger2.component.DaggerPotComponent;
 import exampl.com.dagger2.obj.Pot;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.tv)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, SecondActivity.class));
+                    }
+                });
         DaggerMainActivityComponent.builder()
                 .potComponent(DaggerPotComponent.builder().flowerComponent(DaggerFlowerComponent.create()).build())
                 .build().inject(this);
